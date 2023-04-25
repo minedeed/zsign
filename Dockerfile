@@ -1,9 +1,9 @@
-FROM alpine
+FROM centos:7
 WORKDIR /zsign
 COPY . src/
 
-RUN apk add --no-cache --virtual .build-deps g++ clang clang-static openssl-dev openssl-libs-static && \
-    apk add --no-cache zip unzip && \
+RUN yum install -y g++ clang clang-static openssl-dev openssl-libs-static && \
+    yum install -y zip unzip && \
     clang++ src/*.cpp src/common/*.cpp /usr/lib/libcrypto.a -O3 -o zsign -static && \
 	apk del .build-deps && \
     rm -rf src
